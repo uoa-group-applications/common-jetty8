@@ -10,7 +10,7 @@
 
 	<groupId>nz.ac.auckland.common</groupId>
 	<artifactId>common-jetty8</artifactId>
-	<version>4.2-SNAPSHOT</version>
+	<version>4.2</version>
 	<packaging>jar</packaging>
 
 	<name>common-jetty8</name>
@@ -20,7 +20,8 @@
 		<url>https://github.com/uoa-group-applications/common-jetty8</url>
 		<connection>scm:git:https://github.com/uoa-group-applications/common-jetty8.git</connection>
 		<developerConnection>scm:git:git@github.com:uoa-group-applications/common-jetty8.git</developerConnection>
-	</scm>
+	  <tag>common-jetty8-4.2</tag>
+  </scm>
 
 	<dependencies>
 
