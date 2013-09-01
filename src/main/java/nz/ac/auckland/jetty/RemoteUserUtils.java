@@ -14,6 +14,7 @@ public class RemoteUserUtils {
 	private static final Logger log = LoggerFactory.getLogger(RemoteUserUtils.class);
 	private static final String USER_HEADER = "X-Forwarded-User";
 	private static final String REMOTEUSER_NAME = "remoteuser.name";
+	private static final String REMOTEUSER_SETTABLE = "remoteuser.settable";
 	private static final String REMOTEUSER_ROLES = "remoteuser.localroles";
 	public static final String ROLE_CHECK_OVERRIDE_CLASS = "remoteuser.rolesource";
 	private static RoleSource roleSource = null;
@@ -35,15 +36,16 @@ public class RemoteUserUtils {
 	}
 
 	public static Authentication ensureRemoteUserSetIfIncluded(Request request) {
-		String remoteUser = request.getHeader(USER_HEADER);
+		String remoteUser;
+		if (System.getProperty(REMOTEUSER_SETTABLE, "false").equalsIgnoreCase("true")){
+			remoteUser = System.getProperty(REMOTEUSER_NAME);
+		}else{
+			remoteUser = request.getHeader(USER_HEADER);
+		}
 
 		// deal with the case where Apache sends through "" as the remote user
 		if (remoteUser != null && remoteUser.trim().length() == 0)
 			remoteUser = null;
-
-		if (remoteUser == null) {
-			remoteUser = System.getProperty(REMOTEUSER_NAME);
-		}
 
 		RemoteUserAuthenticationUser user = null;
 
