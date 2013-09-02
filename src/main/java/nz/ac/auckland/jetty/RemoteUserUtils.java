@@ -6,8 +6,7 @@ import org.eclipse.jetty.server.UserIdentity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.security.auth.Subject;
-import java.security.Principal;
+
 import java.util.Arrays;
 
 public class RemoteUserUtils {
@@ -19,8 +18,11 @@ public class RemoteUserUtils {
 	public static final String ROLE_CHECK_OVERRIDE_CLASS = "remoteuser.rolesource";
 	private static RoleSource roleSource = null;
 
+	private static boolean allowFakeUser = false;
+
 	public static void initialize() {
 		String clazzName = System.getProperty(ROLE_CHECK_OVERRIDE_CLASS);
+		allowFakeUser = System.getProperty(REMOTEUSER_SETTABLE, "false").equalsIgnoreCase("true");
 
 		if (clazzName != null) {
 			try {
@@ -37,7 +39,7 @@ public class RemoteUserUtils {
 
 	public static Authentication ensureRemoteUserSetIfIncluded(Request request) {
 		String remoteUser;
-		if (System.getProperty(REMOTEUSER_SETTABLE, "false").equalsIgnoreCase("true")){
+		if (allowFakeUser){
 			remoteUser = System.getProperty(REMOTEUSER_NAME);
 		}else{
 			remoteUser = request.getHeader(USER_HEADER);
