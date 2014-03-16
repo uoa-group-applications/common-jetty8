@@ -36,7 +36,12 @@ public class RemoteUserSecurityHandler extends ConstraintSecurityHandler {
         return "form";
       }
 
-      @Override
+	    @Override
+	    public void prepareRequest(ServletRequest servletRequest) {
+
+	    }
+
+	    @Override
       public Authentication validateRequest(ServletRequest request, ServletResponse response, boolean mandatory) throws ServerAuthException {
         return ((Request)request).getAuthentication();
       }
