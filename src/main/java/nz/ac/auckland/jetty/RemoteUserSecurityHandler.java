@@ -31,6 +31,10 @@ public class RemoteUserSecurityHandler extends ConstraintSecurityHandler {
       public void setConfiguration(AuthConfiguration configuration) {
       }
 
+      /** Added for compatibility with Servlet 3.1 Authentication */
+      public void prepareRequest(ServletRequest request) {
+      }
+
       @Override
       public String getAuthMethod() {
         return "form";
